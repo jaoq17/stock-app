@@ -1,0 +1,18 @@
+{
+  "name": "stock-app",
+  "version": "1.0.0",
+  "description": "Aplicacion FULL STACK",
+  "main": "app.js",
+  "author": "Jhonny Ocampo",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
