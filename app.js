@@ -7,7 +7,7 @@ const { error } = require('console');
 
 const app = express()
 
-mongoose.connect(                                                                           // este "stock-app" es el nombre de la base datos que se creara en MongoDB
+mongoose.connect(                                                                           // este "stock-app" es el nombre de la base datos que se creara en MongoDB Atlas
     `mongodb+srv://adminStockApp:${process.env.MONGO_BD_PASS}@stock-app.adhh3ph.mongodb.net/stock-app?retryWrites=true&w=majority&appName=Stock-app`
     )
     .then(( result) => {
