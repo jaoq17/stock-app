@@ -51,7 +51,7 @@ app.post('/api/v1/products', (req, res) =>{
 
 app.get('/', (req, res, next) => {
     const pokeApiBaseUrl = `https://pokeapi.co/api/v2/pokemon`
-        axios(`${pokeApiBaseUrl}/charmander`).then((axiosResponse) =>{                        
+        axios(`${pokeApiBaseUrl}/charmander`).then((axiosResponse) =>{    // Aca creo un pokemon desde el lado del servidor                     
             const pokemon = axiosResponse.data
             console.log({ pokemon })
             const html = `
