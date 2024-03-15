@@ -38,7 +38,7 @@ fetch(`${pokeApiBaseUrl}/pikachu`)
     })
     .then((pokemon) =>{    //aca ya recibimos al pokemon 
         createPokemon(pokemon)  // <------------------ Aca llamo a la funcion de arriba de crear pokemones  
-
+    })
         
         //   .... de aqui para abajo es el codigo anterior de como se creaba el pokemon que le pase a la funcion crear pokemon de arriba                                  
         // console.log({ pokemon })
@@ -52,7 +52,7 @@ fetch(`${pokeApiBaseUrl}/pikachu`)
         // div.innerHTML = html
 
         // document.querySelector('body').appendChild(div)
-    })
+    
 
 
 fetch(`${pokeApiBaseUrl}/blastoise`)
