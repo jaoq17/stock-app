@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose');
 const { error } = require('console');
+const { default: axios } = require('axios');
 
 
 const app = express()
@@ -48,7 +49,58 @@ app.post('/api/v1/products', (req, res) =>{
 
 // res.status(200).sendFile('index.html', { root: __dirname})
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.get('/', (req, res, next) => {
+    const pokeApiBaseUrl = `https://pokeapi.co/api/v2/pokemon`
+        axios(`${pokeApiBaseUrl}/charmander`).then((axiosResponse) =>{                        
+            const pokemon = axiosResponse.data
+            console.log({ pokemon })
+            const html = `
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="style.css">
+                <script src="index.js" defer></script>
+                <title>App productos</title>
+
+            </head>
+            <body> 
+            <h1>Nuestra app de productos normi</h1>
+            <a href="about.html">Sobre ...</a>
+            <div class="form-container">
+                    <input type="text" id="productName" placeholder="Nombre del producto">
+                    <input type="number" id="productPrice" placeholder="Precio del producto">
+                    <button>Crear producto</button>
+
+                <h2>Listado de productos</h2>
+            </div>  
+            <div class="poke-card">
+                <h3>${pokemon.name}</h3>
+                <img src=${pokemon.sprites.front_default} alt="Esta es una imagen del pokemon: ${pokemon.name}">
+                <span>#${pokemon.id}</span>
+            </div>
+            </body>
+            `
+            res.send(html)     
+        })
+
+        
+    // .then((pokemon) =>{                                     
+    //     // console.log({ pokemon })
+    //     const html = `
+    //         <h3>${pokemon.name}</h3>
+    //         <img src=${pokemon.sprites.front_default} alt="Esta es una imagen del pokemon: ${pokemon.name}">
+    //         <span>#${pokemon.id}</span>
+    //     `
+    //     const div = document.createElement('div')
+    //     div.classList.add('poke-card')
+    //     div.innerHTML = html
+
+    //     document.querySelector('body').appendChild(div)
+    // })
+    // .catch()
+})
+
+app.use(express.static(path.join(__dirname, 'public')))  //el "static" permite que todo el contenido de la carpeta "public" este disponible para acceder desde la web
 
 const PORT = process.env.PORT
 
