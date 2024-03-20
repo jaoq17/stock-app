@@ -4,7 +4,7 @@ const Product = require('../models/product')   // por defecto ya lo busca, no ha
 const getProducts = async (req, res) => {
     const products = await Product.find()  // peticion a la base de datos asyncrona
 
-    res.status(200).json({ ok: true, pepito: products })
+    res.status(200).json({ ok: true, products })
 }
 
 
