@@ -1,65 +1,20 @@
 require('dotenv').config()
 const express = require('express')
-// const path = require('path')
-const mongoose = require('mongoose');
-const { error } = require('console');
-// const { default: axios } = require('axios');
-const { request } = require('http');
 const cors = require('cors');
-
+const dbConnect = require('./db')   //como el archivo que esta en db se llama index.js lo toma automaticamente solo con el nonbre de la carpeta
+const productRouter = require('./routes/product')
 
 
 const app = express()
 
-app.use(cors())
 
+dbConnect(app)
 
-mongoose.connect(                                                                           // este "stock-app" es el nombre de la base datos que se creara en MongoDB Atlas
-    `mongodb+srv://adminStockApp:${process.env.MONGO_BD_PASS}@stock-app.adhh3ph.mongodb.net/stock-app?retryWrites=true&w=majority&appName=Stock-app`
-    )
-    .then(( result) => {
-        app.listen(PORT, () => {
-            console.log(`Servidor escuchando puerto: ${PORT}`)
-        })
-        console.log('Conexión exitosa a la BBDD')
-    })
-    .catch((err) => console.log(err))
-
-
-const productSchema = mongoose.Schema({      //es crear las variables para hacer el modelo
-    name: {type : String, required: true},
-    price: Number,
-},
-{timestamps: true}      //una propiedad para que se coloque la fecha
-)
-
-
-const Product = mongoose.model('Product', productSchema) // aca depsues de productSchema, colocaria coma y le colocaria nombre, pero si lo dejo asi, el coloca por defecto el nombre de la constante 'Product'
-
+app.use(cors({ origin: true }))
 
 app.use(express.json())
 
-
-app.post('/api/v1/products', (req, res) =>{
-    if(!req.body.name){
-        res
-        .status(400)
-        .json({
-            ok: false,
-            message: 'El campo Nombre del producto es obligatorio'
-        })
-        return
-    }
-    const newProduct = new Product(req.body)  // tambien puedo pasarlo de la forma de abajo, pero asi es mas legible el codigo
-        //  { name: req.body.name, price: req.body.price, })
-
-    newProduct.
-        save().
-        then((result) => {
-            res.status(201).json({ ok: true})
-        })
-        .catch((err) => console.log(err))
-})
+app.use('/api/v1/products', productRouter )
 
 // res.status(200).sendFile('index.html', { root: __dirname})
 
@@ -116,5 +71,4 @@ app.post('/api/v1/products', (req, res) =>{
 
 // app.use(express.static(path.join(__dirname, 'public')))    //el "static" permite que todo el contenido de la carpeta "public" este disponible para acceder desde la web
 
-const PORT = process.env.PORT
 
