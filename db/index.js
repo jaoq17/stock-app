@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+                                           // por defecto ya lo busca, no hace falta colocar la extension .js
+
 
 
 const dbConnect = (app) =>{
@@ -12,6 +14,9 @@ const dbConnect = (app) =>{
             console.log(`Servidor escuchando puerto: ${PORT}`)
         })
         console.log('Conexión exitosa a la BBDD')
+
+        // Product.updateMany({}, { $set: { deleted: false } }).then((res) =>   //para saber cuantos elementos se eliminaron de la base de datos
+        //     console.log({ res }))
     })
     .catch((err) => console.log(err))
 }

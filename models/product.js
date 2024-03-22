@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const productSchema = mongoose.Schema({      //es crear las variables para hacer el modelo
     name: {type : String, required: true},
     price: Number,
+    deleted: {type: Boolean, default: false},
 },
 {timestamps: true}      //una propiedad para que se coloque la fecha
 )
