@@ -9,6 +9,15 @@ const getProducts = async (req, res) => {
         {
             $match: { deleted: false},
         },
+    
+        {
+            $sort: { _id: -1},
+        },
+
+        {
+            $limit: 10,
+        },
+
         {
             $lookup: {
                 from: 'movements',
@@ -17,12 +26,14 @@ const getProducts = async (req, res) => {
                 as: 'movements'
             },
         },
+
         {
             $unwind: {
                 path: '$movements',
                 preserveNullAndEmptyArrays: true,
             },
         },
+
         {
             $group: {
                 _id: {_id: '$_id', name: '$name', price: '$price'},
@@ -31,6 +42,7 @@ const getProducts = async (req, res) => {
                 }
             },
         },
+
         {
             $project: {
                 _id: '$_id._id',
@@ -40,10 +52,9 @@ const getProducts = async (req, res) => {
             },
         },
         {
-            $sort: { _id: -1},
-        },
-        {
-            $limit: 10,
+            $sort: {
+                stock: -1,
+            }
         },
     ])
 
